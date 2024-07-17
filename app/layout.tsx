@@ -5,6 +5,7 @@ import "./globals.css";
 import { NavBar } from "./NavBar";
 import { Theme } from "@radix-ui/themes";
 import "./them-config.css";
+import "tailwindcss/tailwind.css";
 
 const inter = Inter({
   subsets: ["latin"],
