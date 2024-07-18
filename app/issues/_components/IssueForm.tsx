@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Issue } from "@prisma/client";
+import { Spinner } from "@/app/Components";
 
 interface IssueFormData {
   title: string;
@@ -20,15 +21,21 @@ function IssueForm({ issue }: { issue?: Issue }) {
   const { register, handleSubmit, control } = useForm<IssueFormData>();
   const navigate = useRouter();
   const [errors, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
   return (
     <form
       className="max-w-lg space-y-3"
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axios.post("/api/issues", data);
-
-          navigate.push("/issues");
+          setSubmitting(true);
+          if (issue) {
+            await axios.put(`/api/issues/${issue.id}`, data);
+          } else {
+            await axios.post("/api/issues", data);
+            navigate.push("/issues");
+          }
         } catch (err) {
+          setSubmitting(false);
           setError("An expected error occure ");
         }
       })}
@@ -52,7 +59,10 @@ function IssueForm({ issue }: { issue?: Issue }) {
         )}
       ></Controller>
 
-      <Button>Submit</Button>
+      <Button disabled={isSubmitting}>
+        {issue ? "Update Issue" : "Submit New Issue"}
+        {isSubmitting && <Spinner></Spinner>}
+      </Button>
     </form>
   );
 }
