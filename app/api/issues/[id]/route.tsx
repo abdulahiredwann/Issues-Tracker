@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { IssueSchema } from "../route";
+
 import prisma from "@/prisma/client";
-import { notFound } from "next/navigation";
+import { IssueSchema } from "../schema";
 
 export async function PUT(
   request: NextRequest,
