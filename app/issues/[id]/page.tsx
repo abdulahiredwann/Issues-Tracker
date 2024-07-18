@@ -24,7 +24,7 @@ async function IssueDetails({ params }: Props) {
         <IssuesDetail issue={issue}></IssuesDetail>
       </Box>
       <Box>
-        <EditIssueButton></EditIssueButton>
+        <EditIssueButton issueId={issue.id}></EditIssueButton>
       </Box>
     </Grid>
   );
