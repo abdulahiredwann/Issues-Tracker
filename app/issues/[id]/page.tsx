@@ -7,6 +7,7 @@ import { Pencil2Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import IssuesDetail from "./IssuesDetail";
 import EditIssueButton from "./EditIssueButton";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface Props {
   params: { id: string };
@@ -19,12 +20,18 @@ async function IssueDetails({ params }: Props) {
   if (!issue) notFound();
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap={"3"}>
-      <Box>
+    <Grid columns={{ initial: "1", sm: "5" }} gap={"5"}>
+      <Box
+        className="md:col-span-4
+      "
+      >
         <IssuesDetail issue={issue}></IssuesDetail>
       </Box>
       <Box>
-        <EditIssueButton issueId={issue.id}></EditIssueButton>
+        <Flex direction="column" gap={"4"}>
+          <EditIssueButton issueId={issue.id}></EditIssueButton>
+          <DeleteIssueButton issueId={issue.id}></DeleteIssueButton>
+        </Flex>
       </Box>
     </Grid>
   );

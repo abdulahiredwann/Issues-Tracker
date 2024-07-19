@@ -12,7 +12,7 @@ function IssuesDetail({ issue }: { issue: Issue }) {
           <IssueStatus status={issue.status}></IssueStatus>
           <Text>{issue?.createdAt.toDateString()}</Text>
         </Flex>
-        <Card className="prose">
+        <Card className="prose max-w-full" mt={"4"}>
           <Markdown>{issue?.description}</Markdown>
         </Card>
       </div>

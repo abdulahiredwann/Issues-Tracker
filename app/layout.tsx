@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "./NavBar";
-import { Theme } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import "./them-config.css";
 import "tailwindcss/tailwind.css";
 
@@ -28,7 +28,9 @@ export default function RootLayout({
       <body>
         <Theme accentColor="violet" radius="large">
           <NavBar />
-          <main className="p-5">{children}</main>
+          <main className="p-5">
+            <Container>{children}</Container>
+          </main>
         </Theme>
       </body>
     </html>

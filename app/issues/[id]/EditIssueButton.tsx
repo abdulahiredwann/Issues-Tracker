@@ -4,12 +4,20 @@ import Link from "next/link";
 
 function EditIssueButton({ issueId }: { issueId: number }) {
   return (
-    <Link href={`/issues/${issueId}/edit`}>
-      {" "}
-      <Button>
-        <Pencil2Icon></Pencil2Icon>Edit Issue
-      </Button>
-    </Link>
+    <Button>
+      <Link
+        href={`/issues/${issueId}/edit`}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          textDecoration: "none",
+          color: "inherit",
+        }}
+      >
+        <Pencil2Icon style={{ marginRight: "8px" }} />
+        Edit Issue
+      </Link>
+    </Button>
   );
 }
 

@@ -30,3 +30,22 @@ export async function PUT(
 
   return NextResponse.json({ updateIssue }, { status: 201 });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!issue) {
+    return NextResponse.json({ error: "Not FOund" });
+  }
+  const deleteIssue = await prisma.issue.delete({
+    where: { id: parseInt(params.id) },
+  });
+  return NextResponse.json({});
+}
