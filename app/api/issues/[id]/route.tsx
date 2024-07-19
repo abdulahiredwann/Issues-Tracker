@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/prisma/client";
 import { IssueSchema } from "../schema";
+import delay from "delay";
 
 export async function PUT(
   request: NextRequest,
