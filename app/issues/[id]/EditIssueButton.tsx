@@ -6,7 +6,7 @@ function EditIssueButton({ issueId }: { issueId: number }) {
   return (
     <Button>
       <Link
-        href={`/issues/${issueId}/edit`}
+        href={`/issues/edit/${issueId}`}
         style={{
           display: "flex",
           alignItems: "center",
