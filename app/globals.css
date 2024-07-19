@@ -13,3 +13,9 @@
   body {
     font-family: var(--default-font-family);
   }
+
+  @layer utilities {
+    .nav-link {
+      @apply text-zinc-500 hover:text-green-800 transition-colors
+    }
+  }
