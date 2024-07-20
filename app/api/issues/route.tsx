@@ -2,6 +2,8 @@ import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { IssueSchema } from "./schema";
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/authOptions";
 
 // Define the schema for issue validation
 
@@ -10,6 +12,10 @@ type IssueType = z.infer<typeof IssueSchema>;
 
 export async function POST(request: NextRequest) {
   const body: IssueType = await request.json();
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({}, { status: 401 });
+  }
 
   // Validate the request body
   const validation = IssueSchema.safeParse(body);

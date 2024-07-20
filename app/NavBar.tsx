@@ -13,6 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiLogOut } from "react-icons/bi";
 import { GrTechnology } from "react-icons/gr";
+import { Skeleton } from "@/app/Components";
 
 export const NavBar = () => {
   return (
@@ -59,7 +60,7 @@ const NavLinks = () => {
 };
 const AuthStatus = () => {
   const { status, data: session } = useSession();
-  if (status === "loading") return;
+  if (status === "loading") return <Skeleton></Skeleton>;
 
   if (status === "unauthenticated")
     return (
