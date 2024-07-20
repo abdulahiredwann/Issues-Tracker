@@ -16,19 +16,17 @@ function AssigneeIssues({ issue }: { issue: Issue }) {
     return <Skeleton></Skeleton>;
   }
 
-  const assignIssue = () => {
-    (userId: string) => {
-      axios
-        .put("/api/issues/" + issue.id, {
-          assignedToUserId: userId === "unassigned" ? null : userId,
-        })
-        .then(() => {
-          toast.success("Ok");
-        })
-        .catch(() => {
-          toast.error("Please try again!");
-        });
-    };
+  const assignIssue = (userId: string) => {
+    axios
+      .put("/api/issues/" + issue.id, {
+        assignedToUserId: userId === "unassigned" ? null : userId,
+      })
+      .then(() => {
+        toast.success("Ok");
+      })
+      .catch(() => {
+        toast.error("Please try again!");
+      });
   };
   return (
     <>
