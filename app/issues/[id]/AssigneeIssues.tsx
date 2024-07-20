@@ -1,48 +1,36 @@
 "use client";
 import { User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Skeleton } from "@/app/Components";
 
 function AssigneeIssues() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const { data } = await axios.get<User[]>("/api/users");
-        if (Array.isArray(data)) {
-          setUsers(data);
-        } else {
-          throw new Error("Data is not an array");
-        }
-      } catch (err) {
-        setError("Failed to fetch users");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000,
+    retry: 3,
+  });
 
   if (error) {
-    return <div>{error}</div>;
+    return null;
   }
-
+  if (isLoading) {
+    return <Skeleton></Skeleton>;
+  }
   return (
     <Select.Root>
       <Select.Trigger placeholder="Assign..."></Select.Trigger>
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
-          {users.map((user) => (
+          {users?.map((user) => (
             <Select.Item key={user.id} value={user.id}>
               {user.name}
             </Select.Item>
