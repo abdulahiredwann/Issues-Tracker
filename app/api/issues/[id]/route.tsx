@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/prisma/client";
-import { IssueSchema } from "../schema";
+import { UpdateSchema } from "../schema";
 import delay from "delay";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
@@ -16,9 +16,19 @@ export async function PUT(
   }
   const body = await request.json();
 
-  const validation = IssueSchema.safeParse(body);
+  const validation = UpdateSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
+  }
+  const { assignedToUserId } = body;
+
+  if (assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { id: assignedToUserId },
+    });
+    if (!user) {
+      return NextResponse.json({ error: "Invalid User" }, { status: 400 });
+    }
   }
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
@@ -32,6 +42,7 @@ export async function PUT(
     data: {
       title: body.title,
       description: body.description,
+      assignedToUserId,
     },
   });
 
