@@ -1,16 +1,12 @@
-import IssueStatus from "@/app/Components/IssueStatus";
-import prisma from "@/prisma/client";
-import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import { notFound } from "next/navigation";
-import Markdown from "react-markdown";
-import { Pencil2Icon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import IssuesDetail from "./IssuesDetail";
-import EditIssueButton from "./EditIssueButton";
-import DeleteIssueButton from "./DeleteIssueButton";
-import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
+import prisma from "@/prisma/client";
+import { Box, Flex, Grid } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 import AssigneeIssues from "./AssigneeIssues";
+import DeleteIssueButton from "./DeleteIssueButton";
+import EditIssueButton from "./EditIssueButton";
+import IssuesDetail from "./IssuesDetail";
 
 interface Props {
   params: { id: string };
@@ -42,6 +38,18 @@ async function IssueDetails({ params }: Props) {
       )}
     </Grid>
   );
+}
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  return {
+    title: issue?.title,
+    description: "Details of issue " + issue?.id,
+  };
 }
 
 export default IssueDetails;
