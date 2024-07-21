@@ -6,7 +6,7 @@ import IssueStatusFilter from "./IssueStatusFilter";
 function IssueAdd() {
   return (
     <>
-      <Flex mb="5" justify={"between"}>
+      <Flex justify={"between"}>
         <IssueStatusFilter></IssueStatusFilter>
 
         <Button>
