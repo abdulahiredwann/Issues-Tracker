@@ -6,6 +6,7 @@ import IssueAdd from "./IssueAdd";
 import { object, string } from "zod";
 import { Issue, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   searchParams: { status: Status; orderBy: keyof Issue };
@@ -43,7 +44,10 @@ async function IssuesPage({ searchParams }: Props) {
           <Table.Header>
             <Table.Row>
               {columns.map((column) => (
-                <Table.ColumnHeaderCell key={column.value}>
+                <Table.ColumnHeaderCell
+                  key={column.value}
+                  className={column.className}
+                >
                   <NavLink
                     href={{
                       query: { ...searchParams, orderBy: column.value },

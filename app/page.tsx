@@ -1,12 +1,16 @@
-import { Button } from "@radix-ui/themes";
-import Image from "next/image";
+"use client";
+import React from "react";
+import Pagination from "@/app/Components/Pagination"; // Ensure correct path
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+  const currentPage = page ? parseInt(page, 10) : 1;
+
   return (
-    <div>
-      <h1>
-        <Button>Issues</Button>
-      </h1>
-    </div>
+    <>
+      <Pagination itemCount={100} pageSize={10} currentPage={currentPage} />
+    </>
   );
 }
